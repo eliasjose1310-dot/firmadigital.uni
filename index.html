@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>Firma | Portal de registro</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17213a;
+      --muted: #68728a;
+      --line: #e4e8f0;
+      --blue: #4258d6;
+      --blue-dark: #3043b5;
+      --paper: #fff;
+      --bg: #f6f7fb;
+      --green: #157347;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 10% 12%, rgba(87, 105, 224, .10), transparent 34rem),
+        var(--bg);
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .topbar {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand { display: flex; gap: 11px; align-items: center; font-weight: 750; letter-spacing: -.03em; }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: white;
+      border-radius: 12px;
+      background: var(--blue);
+      box-shadow: 0 6px 16px rgba(66, 88, 214, .22);
+    }
+    .brand-mark svg { width: 20px; height: 20px; }
+    .top-label { color: var(--muted); font-size: 13px; }
+
+    main {
+      width: min(1120px, calc(100% - 48px));
+      margin: 38px auto 64px;
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(460px, 1.08fr);
+      gap: clamp(42px, 8vw, 104px);
+      align-items: center;
+    }
+
+    .intro { padding: 18px 0; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 22px; height: 2px; content: ""; background: currentColor; }
+    h1 {
+      max-width: 480px;
+      margin: 0;
+      font-size: clamp(38px, 5vw, 58px);
+      line-height: 1.06;
+      letter-spacing: -.055em;
+    }
+    .intro-copy {
+      max-width: 430px;
+      margin: 21px 0 30px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .benefits { display: grid; gap: 17px; }
+    .benefit { display: flex; gap: 12px; align-items: flex-start; color: #39445d; font-size: 14px; }
+    .check {
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      border-radius: 50%;
+      background: #e9ecff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .card {
+      padding: clamp(24px, 4vw, 38px);
+      border: 1px solid rgba(228, 232, 240, .9);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 22px 65px rgba(31, 43, 82, .09);
+    }
+    .card-heading { margin-bottom: 25px; }
+    .card-heading h2 { margin: 0 0 7px; font-size: 24px; letter-spacing: -.035em; }
+    .card-heading p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      margin-bottom: 24px;
+      border-radius: 11px;
+      background: #f2f4f8;
+    }
+    .switcher button {
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 8px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .switcher button[aria-selected="true"] {
+      color: var(--ink);
+      background: white;
+      box-shadow: 0 1px 5px rgba(26, 39, 72, .10);
+    }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 14px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    label { color: #34405a; font-size: 12px; font-weight: 700; }
+    input {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      border: 1px solid #dfe4ed;
+      border-radius: 9px;
+      outline: none;
+      color: var(--ink);
+      background: white;
+      font-size: 14px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    input::placeholder { color: #a0a8b7; }
+    input:focus { border-color: #7b8bf0; box-shadow: 0 0 0 3px rgba(66, 88, 214, .12); }
+    .helper { margin: 1px 0 0; color: #838ca0; font-size: 11px; line-height: 1.5; }
+    .primary {
+      width: 100%;
+      min-height: 47px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 21px;
+      border: 0;
+      border-radius: 9px;
+      color: white;
+      background: var(--blue);
+      font-size: 14px;
+      font-weight: 700;
+      transition: background .15s, transform .15s;
+    }
+    .primary:hover { background: var(--blue-dark); }
+    .primary:active { transform: translateY(1px); }
+    .primary svg { width: 17px; height: 17px; }
+    .privacy-note {
+      display: flex;
+      gap: 8px;
+      margin: 18px 0 0;
+      color: #788196;
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .privacy-note svg { flex: 0 0 15px; width: 15px; height: 15px; margin-top: 1px; }
+    .message { min-height: 19px; margin: 12px 0 0; color: #b42318; font-size: 12px; line-height: 1.5; }
+    [hidden] { display: none !important; }
+
+    .result { text-align: center; }
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      color: var(--green);
+      background: #e8f5ee;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    .result h2 { margin: 0 0 8px; font-size: 23px; letter-spacing: -.035em; }
+    .result-intro { margin: 0 auto 22px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .signature-paper {
+      padding: 14px 12px 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .signature-paper canvas { display: block; width: 100%; height: auto; }
+    .signature-caption { margin: 2px 0 0; color: #7c8699; font-size: 10px; }
+    .hash-block {
+      margin: 16px 0;
+      padding: 12px;
+      border-radius: 9px;
+      text-align: left;
+      background: #f6f7fa;
+    }
+    .hash-block strong { display: block; margin-bottom: 6px; color: #536079; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+    .hash-value { display: block; overflow-wrap: anywhere; color: #384663; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; line-height: 1.55; }
+    .result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .secondary {
+      min-height: 43px;
+      border: 1px solid #dfe4ed;
+      border-radius: 9px;
+      color: #39445d;
+      background: white;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .secondary:hover { background: #f7f8fb; }
+    .disclaimer { margin: 17px 0 0; color: #838ca0; font-size: 10px; line-height: 1.55; text-align: left; }
+    footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 0 0 26px;
+      color: #8a93a5;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      main { grid-template-columns: 1fr; gap: 28px; margin-top: 22px; }
+      .intro { padding: 0; }
+      .intro-copy { margin: 14px 0 18px; }
+      .benefits { grid-template-columns: 1fr 1fr; }
+      h1 { max-width: 650px; font-size: clamp(36px, 8vw, 50px); }
+    }
+    @media (max-width: 520px) {
+      .topbar, main, footer { width: min(100% - 32px, 440px); }
+      .topbar { height: 68px; }
+      .top-label { font-size: 11px; }
+      .benefits { grid-template-columns: 1fr; gap: 11px; }
+      main { margin-top: 19px; }
+      .card { padding: 23px 19px; border-radius: 17px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .result-actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 16.8c2.2-1.6 3.3-7.5 5.2-7.5 1.8 0 .1 6.4 2.1 6.4 1.2 0 2.8-4.9 4.1-4.9 1.1 0 0 3.2 1.4 3.2.8 0 1.6-.7 3.2-2.1M4 20h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      Firma
+    </div>
+    <span class="top-label">Portal de identidad académica</span>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <span class="eyebrow">Identidad digital</span>
+      <h1 id="page-title">Tu identidad, con tu propia firma.</h1>
+      <p class="intro-copy">Regístrate para crear una representación digital de tu firma y un código de verificación asociado a tus datos.</p>
+      <div class="benefits">
+        <div class="benefit"><span class="check" aria-hidden="true">✓</span><span>Firma personalizada con tu nombre y apellido.</span></div>
+        <div class="benefit"><span class="check" aria-hidden="true">✓</span><span>Descarga tu firma como imagen PNG.</span></div>
+        <div class="benefit"><span class="check" aria-hidden="true">✓</span><span>Tus datos no se envían a ningún servidor.</span></div>
+      </div>
+    </section>
+
+    <section class="card" aria-live="polite">
+      <div id="form-view">
+        <div class="card-heading">
+          <h2 id="form-title">Crea tu cuenta</h2>
+          <p id="form-subtitle">Completa tus datos para generar tu firma.</p>
+        </div>
+        <div class="switcher" role="tablist" aria-label="Acceso al portal">
+          <button id="register-tab" type="button" role="tab" aria-selected="true" aria-controls="register-panel">Registrarme</button>
+          <button id="login-tab" type="button" role="tab" aria-selected="false" aria-controls="login-panel">Iniciar sesión</button>
+        </div>
+
+        <form id="register-panel" role="tabpanel" aria-labelledby="register-tab">
+          <div class="field-grid">
+            <div class="field full">
+              <label for="full-name">Nombre y apellido</label>
+              <input id="full-name" name="fullName" type="text" autocomplete="name" placeholder="Ej. María Pérez" required minlength="3" maxlength="80">
+            </div>
+            <div class="field">
+              <label for="cedula">Cédula</label>
+              <input id="cedula" name="cedula" type="text" autocomplete="off" inputmode="numeric" placeholder="Tu número de identificación" required minlength="5" maxlength="20">
+            </div>
+            <div class="field">
+              <label for="birth-date">Fecha de nacimiento</label>
+              <input id="birth-date" name="birthDate" type="date" autocomplete="bday" required>
+            </div>
+            <div class="field full">
+              <label for="career">Carrera</label>
+              <input id="career" name="career" type="text" autocomplete="organization-title" placeholder="Ej. Ingeniería de Sistemas" required minlength="2" maxlength="100">
+            </div>
+            <div class="field full">
+              <label for="register-password">Crea una clave de acceso</label>
+              <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres" required minlength="8" maxlength="64">
+              <p class="helper">La necesitarás para volver a iniciar sesión en esta demostración.</p>
+            </div>
+          </div>
+          <button class="primary" type="submit">
+            Generar mi firma
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+
+        <form id="login-panel" role="tabpanel" aria-labelledby="login-tab" hidden>
+          <div class="field-grid">
+            <div class="field full">
+              <label for="login-cedula">Cédula</label>
+              <input id="login-cedula" name="cedula" type="text" autocomplete="username" placeholder="Tu número de identificación" required>
+            </div>
+            <div class="field full">
+              <label for="login-password">Clave de acceso</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Tu clave" required>
+            </div>
+          </div>
+          <button class="primary" type="submit">Iniciar sesión</button>
+          <p class="helper">La cuenta solo existe durante esta sesión de demostración.</p>
+        </form>
+        <p class="privacy-note">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5 3.5 5v4.7c0 3.9 2.8 6.4 6.5 7.8 3.7-1.4 6.5-3.9 6.5-7.8V5L10 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="m7.5 10 1.7 1.7 3.5-3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Demostración local: los datos se mantienen solo en memoria y se borran al recargar la página.
+        </p>
+        <p class="message" id="form-message" role="alert"></p>
+      </div>
+
+      <div id="result-view" class="result" hidden>
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <h2>Tu firma está lista</h2>
+        <p class="result-intro">Esta firma gráfica se generó para <strong id="result-name"></strong>.</p>
+        <div class="signature-paper">
+          <canvas id="signature-canvas" width="760" height="230" aria-label="Imagen de la firma generada"></canvas>
+          <p class="signature-caption">Firma gráfica personal</p>
+        </div>
+        <div class="hash-block">
+          <strong>Huella digital SHA-256 de los datos</strong>
+          <span class="hash-value" id="signature-hash"></span>
+        </div>
+        <div class="result-actions">
+          <button class="secondary" id="download-button" type="button">Descargar firma PNG</button>
+          <button class="secondary" id="logout-button" type="button">Cerrar sesión</button>
+        </div>
+        <p class="disclaimer">Aviso: esto es una demostración visual. La imagen y la huella no son una firma electrónica certificada ni sustituyen un certificado digital o un servicio legal de firma.</p>
+        <p class="message" id="result-message" role="alert"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>Demostración de registro y firma gráfica · No es un servicio de certificación digital</footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const registerTab = document.getElementById("register-tab");
+      const loginTab = document.getElementById("login-tab");
+      const registerForm = document.getElementById("register-panel");
+      const loginForm = document.getElementById("login-panel");
+      const formView = document.getElementById("form-view");
+      const resultView = document.getElementById("result-view");
+      const formMessage = document.getElementById("form-message");
+      const resultMessage = document.getElementById("result-message");
+      const birthDate = document.getElementById("birth-date");
+      let account = null;
+      let currentSignature = "";
+
+      birthDate.max = new Date().toISOString().slice(0, 10);
+
+      function showTab(tab) {
+        const registering = tab === "register";
+        registerTab.setAttribute("aria-selected", String(registering));
+        loginTab.setAttribute("aria-selected", String(!registering));
+        registerForm.hidden = !registering;
+        loginForm.hidden = registering;
+        document.getElementById("form-title").textContent = registering ? "Crea tu cuenta" : "Qué bueno verte";
+        document.getElementById("form-subtitle").textContent = registering
+          ? "Completa tus datos para generar tu firma."
+          : "Ingresa con la cédula y clave que registraste.";
+        formMessage.textContent = "";
+      }
+
+      function drawSignature(name) {
+        const canvas = document.getElementById("signature-canvas");
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.strokeStyle = "#e7eaf1";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(46, 177);
+        context.lineTo(714, 177);
+        context.stroke();
+        context.fillStyle = "#27345b";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.font = 'italic 68px "Brush Script MT", "Segoe Script", cursive';
+        let fontSize = 68;
+        while (context.measureText(name).width > 650 && fontSize > 34) {
+          fontSize -= 2;
+          context.font = 'italic ' + fontSize + 'px "Brush Script MT", "Segoe Script", cursive';
+        }
+        context.fillText(name, canvas.width / 2, 108);
+        context.strokeStyle = "#4258d6";
+        context.lineWidth = 3;
+        context.lineCap = "round";
+        context.beginPath();
+        context.moveTo(175, 143);
+        context.bezierCurveTo(270, 188, 455, 143, 570, 154);
+        context.stroke();
+        return canvas;
+      }
+
+      async function hashRecord(record) {
+        if (!window.crypto || !window.crypto.subtle) {
+          throw new Error("Este navegador no permite generar la huella segura. Abre la página en un navegador compatible.");
+        }
+        const content = [
+          record.fullName,
+          record.cedula,
+          record.birthDate,
+          record.career,
+          record.nonce
+        ].join("|");
+        const bytes = new TextEncoder().encode(content);
+        const digest = await window.crypto.subtle.digest("SHA-256", bytes);
+        return Array.from(new Uint8Array(digest), function (byte) {
+          return byte.toString(16).padStart(2, "0");
+        }).join("");
+      }
+
+      function displayAccount() {
+        formView.hidden = true;
+        resultView.hidden = false;
+        resultMessage.textContent = "";
+        document.getElementById("result-name").textContent = account.fullName;
+        document.getElementById("signature-hash").textContent = currentSignature;
+        drawSignature(account.fullName);
+      }
+
+      registerTab.addEventListener("click", function () { showTab("register"); });
+      loginTab.addEventListener("click", function () { showTab("login"); });
+
+      registerForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        formMessage.textContent = "";
+        const values = new FormData(registerForm);
+        const record = {
+          fullName: String(values.get("fullName")).trim().replace(/\s+/g, " "),
+          cedula: String(values.get("cedula")).trim(),
+          birthDate: String(values.get("birthDate")),
+          career: String(values.get("career")).trim(),
+          password: String(values.get("password")),
+          nonce: window.crypto && window.crypto.randomUUID
+            ? window.crypto.randomUUID()
+            : String(Date.now()) + "-" + Math.random().toString(36).slice(2)
+        };
+        if (new Date(record.birthDate) > new Date()) {
+          formMessage.textContent = "La fecha de nacimiento no puede ser futura.";
+          return;
+        }
+        try {
+          const signature = await hashRecord(record);
+          account = record;
+          currentSignature = signature;
+          displayAccount();
+        } catch (error) {
+          formMessage.textContent = error.message || "No se pudo generar la firma. Inténtalo de nuevo.";
+        }
+      });
+
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        formMessage.textContent = "";
+        const values = new FormData(loginForm);
+        if (!account || String(values.get("cedula")).trim() !== account.cedula ||
+            String(values.get("password")) !== account.password) {
+          formMessage.textContent = "No se encontró una cuenta activa con esos datos. Regístrate de nuevo si recargaste la página.";
+          return;
+        }
+        try {
+          currentSignature = await hashRecord(account);
+          displayAccount();
+        } catch (error) {
+          formMessage.textContent = error.message || "No se pudo cargar la firma. Inténtalo de nuevo.";
+        }
+      });
+
+      document.getElementById("download-button").addEventListener("click", function () {
+        try {
+          const link = document.createElement("a");
+          link.download = "mi-firma.png";
+          link.href = document.getElementById("signature-canvas").toDataURL("image/png");
+          link.click();
+        } catch (error) {
+          resultMessage.textContent = "No se pudo descargar la imagen en este navegador.";
+        }
+      });
+
+      document.getElementById("logout-button").addEventListener("click", function () {
+        resultView.hidden = true;
+        formView.hidden = false;
+        loginForm.reset();
+        showTab("login");
+      });
+    }());
+  </script>
+</body>
+</html>
